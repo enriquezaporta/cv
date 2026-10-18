@@ -239,6 +239,6 @@
     }
   });
 
-  // Abrir directamente con enriquezaporta.es/#terminal
+  // Abrir directamente con dev.enriquezaporta.es/#terminal
   if (location.hash === "#terminal") open();
 })();

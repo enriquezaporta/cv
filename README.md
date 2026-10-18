@@ -1,9 +1,9 @@
-# enriquezaporta.es
+# dev.enriquezaporta.es
 
-Mi CV interactivo, servido desde mi propio homelab: <https://enriquezaporta.es>
+Mi CV interactivo, servido desde mi propio homelab: <https://dev.enriquezaporta.es>
 
 - **Versión visual** con un rack interactivo del homelab donde se ejecuta la página.
-- **Modo terminal** con comandos (`help`, `whoami`, `experience`, `projects`…). También se abre con la tecla `` ` `` o en `enriquezaporta.es/#terminal`.
+- **Modo terminal** con comandos (`help`, `whoami`, `experience`, `projects`…). También se abre con la tecla `` ` `` o en `dev.enriquezaporta.es/#terminal`.
 - **Español e inglés**, según el idioma del navegador o con `?lang=es` / `?lang=en`.
 - **PDF**: el botón *Descargar PDF* usa una hoja de estilos de impresión pensada para A4.
 
