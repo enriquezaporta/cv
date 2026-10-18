@@ -1,0 +1,21 @@
+[Unit]
+Description=Actualiza el CV desde GitHub
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=cvsync
+Group=cvsync
+WorkingDirectory=/var/www/cv
+Environment=HOME=/tmp
+ExecStart=/usr/bin/git fetch --depth 1 origin main
+ExecStart=/usr/bin/git reset --hard origin/main
+ExecStart=/usr/bin/git clean -fd
+
+# Endurecimiento: solo puede escribir en su carpeta
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/www/cv

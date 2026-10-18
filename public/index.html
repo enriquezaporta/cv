@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enrique Zaporta Sierra · Desarrollador web y técnico de sistemas</title>
+  <meta name="description" content="CV de Enrique Zaporta Sierra: desarrollador web full stack y técnico de sistemas IT en Alcañiz (Teruel).">
+  <meta name="author" content="Enrique Zaporta Sierra">
+  <meta name="theme-color" content="#eef0ec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#171b20" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://enriquezaporta.es/">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Enrique Zaporta Sierra">
+  <meta property="og:description" content="Desarrollador web full stack y técnico de sistemas IT. CV servido desde mi propio homelab.">
+  <meta property="og:url" content="https://enriquezaporta.es/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="ui.skip">Saltar al contenido</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top">Enrique Zaporta</a>
+      <nav class="nav" aria-label="Secciones">
+        <a href="#experience" data-i18n="ui.nav.experience">Experiencia</a>
+        <a href="#projects" data-i18n="ui.nav.projects">Proyectos</a>
+        <a href="#homelab" data-i18n="ui.nav.homelab">Homelab</a>
+        <a href="#skills" data-i18n="ui.nav.skills">Habilidades</a>
+        <a href="#education" data-i18n="ui.nav.education">Formación</a>
+        <a href="#contact" data-i18n="ui.nav.contact">Contacto</a>
+      </nav>
+      <div class="tools">
+        <button type="button" class="tool" id="btn-lang" lang="en">English</button>
+        <button type="button" class="tool" id="btn-print" data-i18n="ui.print">Descargar PDF</button>
+        <button type="button" class="tool tool-term" id="btn-terminal">
+          <span class="prompt-glyph" aria-hidden="true">&gt;_</span>
+          <span data-i18n="ui.terminal">Modo terminal</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-text">
+        <h1 class="name" id="hero-name">Enrique Zaporta Sierra</h1>
+        <p class="role" id="hero-role"></p>
+        <p class="location" id="hero-location"></p>
+        <p class="print-contact" id="print-contact"></p>
+        <p class="summary" id="hero-summary"></p>
+        <div class="hero-actions">
+          <a class="btn btn-solid" id="btn-email" href="#contact" data-i18n="ui.emailMe">Escríbeme</a>
+          <a class="btn" id="link-linkedin" href="#" rel="noopener">LinkedIn</a>
+          <a class="btn" id="link-github" href="#" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+      <figure class="rack-figure">
+        <svg class="rack" viewBox="0 0 320 560" role="group" aria-labelledby="rack-caption">
+          <defs>
+            <pattern id="vent" width="6" height="6" patternUnits="userSpaceOnUse">
+              <circle cx="3" cy="3" r="1.1" class="vent-dot"/>
+            </pattern>
+          </defs>
+
+          <!-- Marco del rack -->
+          <rect class="frame" x="20" y="10" width="220" height="540" rx="10"/>
+          <rect class="rail" x="32" y="24" width="14" height="512" rx="2"/>
+          <rect class="rail" x="214" y="24" width="14" height="512" rx="2"/>
+          <g class="holes">
+            <circle cx="39" cy="44" r="2"/><circle cx="221" cy="44" r="2"/>
+            <circle cx="39" cy="84" r="2"/><circle cx="221" cy="84" r="2"/>
+            <circle cx="39" cy="124" r="2"/><circle cx="221" cy="124" r="2"/>
+            <circle cx="39" cy="164" r="2"/><circle cx="221" cy="164" r="2"/>
+            <circle cx="39" cy="204" r="2"/><circle cx="221" cy="204" r="2"/>
+            <circle cx="39" cy="244" r="2"/><circle cx="221" cy="244" r="2"/>
+            <circle cx="39" cy="284" r="2"/><circle cx="221" cy="284" r="2"/>
+            <circle cx="39" cy="324" r="2"/><circle cx="221" cy="324" r="2"/>
+            <circle cx="39" cy="364" r="2"/><circle cx="221" cy="364" r="2"/>
+            <circle cx="39" cy="404" r="2"/><circle cx="221" cy="404" r="2"/>
+            <circle cx="39" cy="444" r="2"/><circle cx="221" cy="444" r="2"/>
+            <circle cx="39" cy="484" r="2"/><circle cx="221" cy="484" r="2"/>
+            <circle cx="39" cy="524" r="2"/><circle cx="221" cy="524" r="2"/>
+          </g>
+
+          <!-- U1 panel de parcheo -->
+          <g class="u" data-unit="patch" tabindex="0">
+            <rect class="u-face" x="50" y="28" width="160" height="36" rx="3"/>
+            <g class="ports">
+              <rect x="62" y="40" width="12" height="11" rx="1.5"/><rect x="80" y="40" width="12" height="11" rx="1.5"/>
+              <rect x="98" y="40" width="12" height="11" rx="1.5"/><rect x="116" y="40" width="12" height="11" rx="1.5"/>
+              <rect x="134" y="40" width="12" height="11" rx="1.5"/><rect x="152" y="40" width="12" height="11" rx="1.5"/>
+              <rect x="170" y="40" width="12" height="11" rx="1.5"/><rect x="188" y="40" width="12" height="11" rx="1.5"/>
+            </g>
+          </g>
+
+          <!-- U2 switch -->
+          <g class="u" data-unit="switch" tabindex="0">
+            <rect class="u-face" x="50" y="68" width="160" height="36" rx="3"/>
+            <g class="ports">
+              <rect x="62" y="82" width="12" height="11" rx="1.5"/><rect x="80" y="82" width="12" height="11" rx="1.5"/>
+              <rect x="98" y="82" width="12" height="11" rx="1.5"/><rect x="116" y="82" width="12" height="11" rx="1.5"/>
+              <rect x="134" y="82" width="12" height="11" rx="1.5"/><rect x="152" y="82" width="12" height="11" rx="1.5"/>
+              <rect x="170" y="82" width="12" height="11" rx="1.5"/><rect x="188" y="82" width="12" height="11" rx="1.5"/>
+            </g>
+            <g class="leds">
+              <circle class="led led-a" cx="68" cy="76" r="1.8"/><circle class="led led-b" cx="86" cy="76" r="1.8"/>
+              <circle class="led led-c" cx="104" cy="76" r="1.8"/><circle class="led led-a" cx="122" cy="76" r="1.8"/>
+              <circle class="led led-off" cx="140" cy="76" r="1.8"/><circle class="led led-off" cx="158" cy="76" r="1.8"/>
+              <circle class="led led-b" cx="176" cy="76" r="1.8"/><circle class="led led-c" cx="194" cy="76" r="1.8"/>
+            </g>
+          </g>
+
+          <!-- U3-U4 pantalla -->
+          <g class="u" data-unit="screen" tabindex="0">
+            <rect class="u-face" x="50" y="108" width="160" height="76" rx="3"/>
+            <rect class="screen" x="60" y="116" width="140" height="60" rx="2"/>
+            <polyline class="spark" points="66,164 78,158 90,161 102,150 114,154 126,143 138,147 150,138 162,141 174,132 186,135 194,128"/>
+            <text class="screen-text" x="66" y="130">pve · ok</text>
+          </g>
+
+          <!-- U5 tapa -->
+          <rect class="blank" x="50" y="188" width="160" height="36" rx="3"/>
+
+          <!-- U6-U8 nodos -->
+          <g class="u" data-unit="pve1" tabindex="0">
+            <rect class="u-face" x="50" y="228" width="160" height="36" rx="3"/>
+            <rect class="node" x="58" y="234" width="106" height="24" rx="2"/>
+            <rect class="node-vent" x="62" y="238" width="44" height="16" fill="url(#vent)"/>
+            <circle class="led led-power" cx="154" cy="246" r="3"/>
+            <text class="node-label" x="174" y="250">pve1</text>
+          </g>
+          <g class="u" data-unit="pve2" tabindex="0">
+            <rect class="u-face" x="50" y="268" width="160" height="36" rx="3"/>
+            <rect class="node" x="58" y="274" width="106" height="24" rx="2"/>
+            <rect class="node-vent" x="62" y="278" width="44" height="16" fill="url(#vent)"/>
+            <circle class="led led-power" cx="154" cy="286" r="3"/>
+            <text class="node-label" x="174" y="290">pve2</text>
+          </g>
+          <g class="u u-here" data-unit="pve3" tabindex="0">
+            <rect class="u-face" x="50" y="308" width="160" height="36" rx="3"/>
+            <rect class="node" x="58" y="314" width="106" height="24" rx="2"/>
+            <rect class="node-vent" x="62" y="318" width="44" height="16" fill="url(#vent)"/>
+            <circle class="led led-power" cx="154" cy="326" r="3"/>
+            <text class="node-label" x="174" y="330">pve3</text>
+          </g>
+
+          <!-- Marcador "esta web" -->
+          <g class="here-marker" aria-hidden="true">
+            <line x1="244" y1="326" x2="262" y2="326"/>
+            <circle cx="244" cy="326" r="3"/>
+            <text id="here-text" x="266" y="330">esta web</text>
+          </g>
+
+          <!-- U9-U10 tapas -->
+          <rect class="blank" x="50" y="348" width="160" height="36" rx="3"/>
+          <rect class="blank" x="50" y="388" width="160" height="36" rx="3"/>
+
+          <!-- U11 PDU -->
+          <g class="u" data-unit="pdu" tabindex="0">
+            <rect class="u-face" x="50" y="428" width="160" height="36" rx="3"/>
+            <g class="sockets">
+              <rect x="64" y="438" width="16" height="16" rx="3"/><rect x="88" y="438" width="16" height="16" rx="3"/>
+              <rect x="112" y="438" width="16" height="16" rx="3"/><rect x="136" y="438" width="16" height="16" rx="3"/>
+              <rect x="160" y="438" width="16" height="16" rx="3"/>
+            </g>
+            <circle class="led led-power" cx="194" cy="446" r="3"/>
+          </g>
+
+          <!-- U12 tapa -->
+          <rect class="blank" x="50" y="468" width="160" height="36" rx="3"/>
+          <rect class="blank" x="50" y="508" width="160" height="26" rx="3"/>
+        </svg>
+        <figcaption class="rack-readout" id="rack-caption" aria-live="polite"></figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="experience" aria-labelledby="h-experience">
+      <h2 id="h-experience" data-i18n="sections.experience">Experiencia</h2>
+      <ol class="timeline" id="list-experience"></ol>
+    </section>
+
+    <section class="section" id="projects" aria-labelledby="h-projects">
+      <h2 id="h-projects" data-i18n="sections.projects">Proyectos</h2>
+      <p class="intro" data-i18n="sections.projectsIntro"></p>
+      <div class="projects" id="list-projects"></div>
+    </section>
+
+    <section class="section" id="homelab" aria-labelledby="h-homelab">
+      <h2 id="h-homelab" data-i18n="sections.homelab">Este CV se sirve desde mi homelab</h2>
+      <p class="intro" data-i18n="sections.homelabIntro"></p>
+      <dl class="homelab" id="list-homelab"></dl>
+    </section>
+
+    <section class="section" id="skills" aria-labelledby="h-skills">
+      <h2 id="h-skills" data-i18n="sections.skills">Habilidades</h2>
+      <dl class="skills" id="list-skills"></dl>
+    </section>
+
+    <section class="section" id="education" aria-labelledby="h-education">
+      <h2 id="h-education" data-i18n="sections.education">Formación</h2>
+      <ol class="timeline" id="list-education"></ol>
+    </section>
+
+    <section class="section" id="contact" aria-labelledby="h-contact">
+      <h2 id="h-contact" data-i18n="sections.contact">Contacto</h2>
+      <p class="intro" data-i18n="sections.contactIntro"></p>
+      <ul class="contact-list">
+        <li><a id="contact-email" href="#">email</a></li>
+        <li><a id="contact-linkedin" href="#" rel="noopener">LinkedIn</a></li>
+        <li><a id="contact-github" href="#" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      <span id="footer-year"></span> Enrique Zaporta Sierra.
+      <a id="link-source" href="#" rel="noopener" data-i18n="ui.sourceNote">El código de esta web es público</a>
+    </p>
+  </footer>
+
+  <noscript>
+    <p class="noscript">
+      Esta página necesita JavaScript para mostrar el CV.
+      <a href="https://www.linkedin.com/in/enrique-zaporta-sierra-79a3aa177/">Ver mi perfil en LinkedIn</a>.
+    </p>
+  </noscript>
+
+  <dialog class="terminal" id="terminal" aria-label="Terminal">
+    <div class="term-bar">
+      <span class="term-title">kike@cv: ~</span>
+      <button type="button" class="term-close" id="term-close" aria-label="Cerrar">×</button>
+    </div>
+    <div class="term-body" id="term-body">
+      <div class="term-out" id="term-out" aria-live="polite"></div>
+      <form class="term-line" id="term-form" autocomplete="off">
+        <label class="term-prompt" for="term-input">kike@cv:~$</label>
+        <input class="term-input" id="term-input" type="text" spellcheck="false" autocapitalize="off" enterkeyhint="send">
+      </form>
+    </div>
+  </dialog>
+
+  <script src="assets/js/content.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/terminal.js"></script>
+</body>
+</html>
