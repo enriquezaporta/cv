@@ -40,6 +40,34 @@
     ["konami", "Modo fiesta", "Party mode"],
     ["secret", "Lo encontraste", "You found it"],
   ];
+  const HINTS = {
+    rmrf: ["Hay un comando que nadie debería ejecutar en un servidor.", "There's a command nobody should ever run on a server.",
+           "Prueba a borrarlo todo: rm -rf /", "Try deleting everything: rm -rf /"],
+    dnsbak: ["Los logs de /var/log cuentan una tragedia doméstica.", "The logs in /var/log tell a household tragedy.",
+             "Lee la copia de seguridad que tumbó el DNS, en /etc/dnsmasq.d/", "Read the backup that killed the DNS, in /etc/dnsmasq.d/"],
+    caddy: ["Al proxy le cuesta mucho recargar. Compruébalo tú mismo.", "The proxy has a hard time reloading. See for yourself.",
+            "systemctl reload caddy, y cuando te aburras, Ctrl+C", "systemctl reload caddy, and when you get bored, Ctrl+C"],
+    vim: ["Entrar en cierto editor es fácil. Salir, no tanto.", "Getting into a certain editor is easy. Getting out, not so much.",
+          "Escribe vim y busca la salida (pista: q!)", "Type vim and find the way out (hint: q!)"],
+    sudo: ["Pedir permisos de administrador sin tenerlos tiene consecuencias.", "Asking for admin rights you don't have has consequences.",
+           "Usa sudo con cualquier comando tres veces seguidas", "Use sudo with any command three times in a row"],
+    hire: ["Mira bien el archivo de contacto.", "Read the contact file carefully.",
+           "sudo hire-me", "sudo hire-me"],
+    fish: ["El autor pesca a feeder los fines de semana.", "The author goes feeder fishing at weekends.",
+           "Escribe pescar (o feeder)", "Type fish (or feeder)"],
+    lap: ["Trabaja en un circuito. ¿Te das una vuelta?", "He works at a race track. Fancy a lap?",
+          "Escribe el nombre del circuito: motorland", "Type the name of the track: motorland"],
+    gym: ["Hay un gimnasio en el garaje. Y hoy toca lo que toca.", "There's a gym in the garage. And today is what it is.",
+          "Escribe gym", "Type gym"],
+    teapot: ["Este servidor no sirve bebidas calientes. Pruébalo.", "This server doesn't serve hot drinks. Try it.",
+             "Pídele un café: coffee", "Ask it for a coffee: coffee"],
+    matrix: ["¿Pastilla roja o azul?", "Red pill or blue pill?",
+             "Escribe matrix", "Type matrix"],
+    konami: ["Un código de los videojuegos de los 80 funciona en la página principal.", "An 80s video game code works on the main page.",
+             "Cierra la terminal y teclea ↑ ↑ ↓ ↓ ← → ← → B A", "Close the terminal and type ↑ ↑ ↓ ↓ ← → ← → B A"],
+    secret: ["Hay archivos que ls no enseña por defecto.", "Some files don't show up with a plain ls.",
+             "ls -a, abre la nota de .secreto/ y descífrala con base64 -d", "ls -a, open the note in .secreto/ and decode it with base64 -d"],
+  };
   let found = new Set(store.get("cv-eggs", []));
   function mark(id, silent) {
     if (found.has(id)) return false;
@@ -217,6 +245,7 @@
             T("oct 19 15:02 casa: no hay internet", "oct 19 15:02 house: no internet"),
             "oct 19 15:03 dns systemd: Started dnsmasq.service",
             T("oct 19 15:03 casa: vuelve a haber internet", "oct 19 15:03 house: internet is back"),
+            T("oct 19 15:04 kike: el culpable sigue en /etc/dnsmasq.d/homelab.conf.bak. Que no se toque.", "oct 19 15:04 kike: the culprit is still at /etc/dnsmasq.d/homelab.conf.bak. Do not touch."),
           ]),
         }),
       }),
@@ -321,11 +350,12 @@
       ["ssh pve1", T("entrar en un nodo del clúster", "log into a cluster node")],
       ["ping, htop, uptime", T("lo de siempre", "the usual")],
       ["history, man", T("historial y ayuda", "history and manuals")],
-      ["logros", T("easter eggs encontrados", "easter eggs found")],
+      ["logros", T("easter eggs encontrados (logros reset para empezar de cero)", "easter eggs found (achievements reset to start over)")],
+      ["pista", T("una pista para el siguiente easter egg", "a clue for the next easter egg")],
     ];
     for (const [k, v] of sys) line("  " + k.padEnd(w + 6) + v);
     line();
-    line(T(`Hay más comandos escondidos. Llevas ${found.size}/${EGGS.length} easter eggs.`, `There are hidden commands. You've found ${found.size}/${EGGS.length} easter eggs.`), "t-dim");
+    line(T(`Hay ${EGGS.length} easter eggs escondidos y llevas ${found.size}. Empieza por logros o por history.`, `There are ${EGGS.length} hidden easter eggs and you've found ${found.size}. Start with achievements or history.`), "t-dim");
     line(t().terminal.hint, "t-dim");
   }
 
@@ -480,10 +510,13 @@
     "apt update && apt full-upgrade -y",
     "pct create 131 ... debian-13-standard_13.6-1_arm64.tar.zst   # ups",
     "journalctl -u caddy -f   # " + "¿por qué no responde la terminal?",
+    "systemctl reload caddy   # y aquí se quedó colgado",
     "cp homelab.conf /etc/dnsmasq.d/homelab.conf.bak   # mala idea",
     "systemctl restart dnsmasq",
     "nslookup google.com   # timed out",
     "git push   # repository not found",
+    "vim notas.txt   # todavía estoy intentando salir",
+    "coffee   # el servidor se negó",
     "sudo hire-me",
   ];
   const history = [];
@@ -723,11 +756,37 @@
     startBusy(stop);
   }
 
-  function logrosCmd() {
+  let confirmReset = false;
+  function resetEggs(all) {
+    found = new Set();
+    store.set("cv-eggs", []);
+    if (all) { store.set("cv-fish-record", 0); store.set("cv-lap", null); }
+    sudoFails = 0;
+    document.documentElement.classList.remove("party");
+    line(all ? T("Logros y récords borrados. A empezar de cero.", "Achievements and records cleared. Fresh start.")
+             : T("Logros borrados (0/13). Los récords de pesca y de vuelta se conservan; para borrarlos también: logros reset --todo", "Achievements cleared (0/13). Fishing and lap records kept; to clear them too: achievements reset --all"), "t-accent");
+  }
+  function logrosCmd(args = []) {
+    if (args[0] === "reset") {
+      confirmReset = args.includes("--todo") || args.includes("--all") ? "all" : "eggs";
+      return line(T(`¿Seguro que quieres borrar ${confirmReset === "all" ? "los logros y los récords" : "los logros"}? Escribe s para confirmar.`, `Sure you want to clear ${confirmReset === "all" ? "achievements and records" : "your achievements"}? Type y to confirm.`), "t-err");
+    }
     heading(`${T("Logros", "Achievements")}: ${found.size}/${EGGS.length}`);
-    for (const [id, nes, nen] of EGGS) line(found.has(id) ? `  ★ ${T(nes, nen)}` : "  ☆ ???", found.has(id) ? "t-accent" : "t-dim");
-    if (found.size < EGGS.length) { line(); line(T("Pista: explora con ls -a, lee los logs y no te fíes de vim.", "Hint: explore with ls -a, read the logs and don't trust vim."), "t-dim"); }
+    for (const [id, nes, nen] of EGGS) {
+      if (found.has(id)) line(`  ★ ${T(nes, nen)}`, "t-accent");
+      else line(`  ☆ ${T(HINTS[id][0], HINTS[id][1])}`, "t-dim");
+    }
+    if (found.size < EGGS.length) { line(); line(T("¿Atascado? Escribe pista para una ayuda más directa.", "Stuck? Type hint for a more direct clue."), "t-dim"); }
     else line(T('Los tienes todos. Escríbeme con "feeder" en el asunto y cuéntame cuánto has tardado.', 'You\'ve got them all. Email me with "feeder" in the subject and tell me how long it took.'), "t-egg");
+  }
+
+  let hintTurn = 0;
+  function pistaCmd() {
+    const pending = EGGS.filter(([id]) => !found.has(id));
+    if (!pending.length) return line(T("No te quedan logros por descubrir. Ya solo falta que me escribas.", "No achievements left. All that's left is to email me."), "t-egg");
+    const [id, nes, nen] = pending[hintTurn++ % pending.length];
+    line(`☆ ${T(nes, nen)}: ${T(HINTS[id][2], HINTS[id][3])}`, "t-accent");
+    if (pending.length > 1) line(T(`Te quedan ${pending.length}. Vuelve a escribir pista para otra.`, `${pending.length} left. Type hint again for another.`), "t-dim");
   }
 
   function base64Cmd(args) {
@@ -783,6 +842,9 @@
     cafe: (a) => sys.coffee(a),
     matrix: matrixCmd,
     logros: logrosCmd, achievements: logrosCmd,
+    pista: pistaCmd, pistas: pistaCmd, hint: pistaCmd, hints: pistaCmd,
+    "café": (a) => sys.coffee(a), te: (a) => sys.coffee(a), "té": (a) => sys.coffee(a), tea: (a) => sys.coffee(a),
+    pesca: pescarCmd,
     base64: base64Cmd, decode: (a) => base64Cmd(["-d", ...a]),
     neofetch() {
       lines([
@@ -821,6 +883,12 @@
 
     const [cmd, ...args] = text.split(/\s+/);
     const name = cmd.toLowerCase();
+    if (confirmReset) {
+      const mode = confirmReset;
+      confirmReset = false;
+      if (["s", "si", "sí", "y", "yes"].includes(name)) return resetEggs(mode === "all");
+      return line(T("Cancelado. Tus logros siguen ahí.", "Cancelled. Your achievements are safe."), "t-dim");
+    }
     if (name === "q" && busy) return interrupt();
     if (sshHost && nodeCmds[name]) return nodeCmds[name](args);
     const fn = cv[name] || sys[name];
@@ -834,7 +902,7 @@
     const v = input.value;
     const parts = v.split(/\s+/);
     if (parts.length <= 1) {
-      const pool = [...Object.keys(cv), "ls", "cd", "cat", "tree", "open", "ssh", "ping", "htop", "history", "man", "logros", "pwd", ...(sshHost ? ["pct", "pvecm"] : [])];
+      const pool = [...Object.keys(cv), "ls", "cd", "cat", "tree", "open", "ssh", "ping", "htop", "history", "man", "logros", "pista", "pwd", ...(sshHost ? ["pct", "pvecm"] : [])];
       const m = [...new Set(pool)].filter((c) => c.startsWith(v.toLowerCase()));
       if (m.length === 1) input.value = m[0] + " ";
       else if (m.length > 1) line(m.join("  "), "t-dim");
@@ -863,6 +931,7 @@
       started = true;
       updatePrompt();
       line(t().terminal.welcome, "t-accent");
+      line(T(`Hay ${EGGS.length} easter eggs escondidos. Escribe logros para ver las pistas.`, `There are ${EGGS.length} hidden easter eggs. Type achievements to see the clues.`), "t-egg");
       line();
       run("whoami");
     }
