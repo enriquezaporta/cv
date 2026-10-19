@@ -253,4 +253,27 @@
 
   $("#btn-lang").addEventListener("click", () => setLang(state.lang === "es" ? "en" : "es"));
   $("#btn-print").addEventListener("click", () => window.print());
+
+  // ---------- código Konami: modo fiesta en el rack ----------
+  const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+  let kpos = 0;
+  function toast(text) {
+    const el = document.createElement("div");
+    el.className = "toast";
+    el.setAttribute("role", "status");
+    el.textContent = text;
+    document.body.append(el);
+    setTimeout(() => el.classList.add("is-out"), 3200);
+    setTimeout(() => el.remove(), 3800);
+  }
+  document.addEventListener("keydown", (e) => {
+    if (document.documentElement.classList.contains("term-open")) return;
+    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    kpos = k === KONAMI[kpos] ? kpos + 1 : k === KONAMI[0] ? 1 : 0;
+    if (kpos < KONAMI.length) return;
+    kpos = 0;
+    const on = document.documentElement.classList.toggle("party");
+    const msg = window.CVEggs && window.CVEggs.mark("konami", true);
+    toast(msg || (on ? (state.lang === "es" ? "Modo fiesta activado" : "Party mode on") : (state.lang === "es" ? "Modo fiesta desactivado" : "Party mode off")));
+  });
 })();

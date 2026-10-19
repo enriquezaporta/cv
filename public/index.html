@@ -58,7 +58,7 @@
       </div>
 
       <figure class="rack-figure">
-        <svg class="rack" viewBox="0 0 320 560" role="group" aria-labelledby="rack-caption">
+        <svg class="rack" viewBox="0 0 320 528" role="group" aria-labelledby="rack-caption">
           <defs>
             <pattern id="vent" width="6" height="6" patternUnits="userSpaceOnUse">
               <circle cx="3" cy="3" r="1.1" class="vent-dot"/>
@@ -66,9 +66,9 @@
           </defs>
 
           <!-- Marco del rack -->
-          <rect class="frame" x="20" y="10" width="220" height="540" rx="10"/>
-          <rect class="rail" x="32" y="24" width="14" height="512" rx="2"/>
-          <rect class="rail" x="214" y="24" width="14" height="512" rx="2"/>
+          <rect class="frame" x="20" y="10" width="220" height="508" rx="10"/>
+          <rect class="rail" x="32" y="24" width="14" height="480" rx="2"/>
+          <rect class="rail" x="214" y="24" width="14" height="480" rx="2"/>
           <g class="holes">
             <circle cx="39" cy="44" r="2"/><circle cx="221" cy="44" r="2"/>
             <circle cx="39" cy="84" r="2"/><circle cx="221" cy="84" r="2"/>
@@ -82,7 +82,6 @@
             <circle cx="39" cy="404" r="2"/><circle cx="221" cy="404" r="2"/>
             <circle cx="39" cy="444" r="2"/><circle cx="221" cy="444" r="2"/>
             <circle cx="39" cy="484" r="2"/><circle cx="221" cy="484" r="2"/>
-            <circle cx="39" cy="524" r="2"/><circle cx="221" cy="524" r="2"/>
           </g>
 
           <!-- U1 panel de parcheo -->
@@ -169,9 +168,16 @@
             <circle class="led led-power" cx="194" cy="446" r="3"/>
           </g>
 
-          <!-- U12 tapa -->
-          <rect class="blank" x="50" y="468" width="160" height="36" rx="3"/>
-          <rect class="blank" x="50" y="508" width="160" height="26" rx="3"/>
+          <!-- U12 segunda PDU -->
+          <g class="u" data-unit="pdu" tabindex="0">
+            <rect class="u-face" x="50" y="468" width="160" height="36" rx="3"/>
+            <g class="sockets">
+              <rect x="64" y="478" width="16" height="16" rx="3"/><rect x="88" y="478" width="16" height="16" rx="3"/>
+              <rect x="112" y="478" width="16" height="16" rx="3"/><rect x="136" y="478" width="16" height="16" rx="3"/>
+              <rect x="160" y="478" width="16" height="16" rx="3"/>
+            </g>
+            <circle class="led led-power" cx="194" cy="486" r="3"/>
+          </g>
         </svg>
         <figcaption class="rack-readout" id="rack-caption" aria-live="polite"></figcaption>
       </figure>

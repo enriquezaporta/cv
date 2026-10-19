@@ -3,7 +3,7 @@
 Mi CV interactivo, servido desde mi propio homelab: <https://dev.enriquezaporta.es>
 
 - **Versión visual** con un rack interactivo del homelab donde se ejecuta la página.
-- **Modo terminal** con comandos (`help`, `whoami`, `experience`, `projects`…). También se abre con la tecla `` ` `` o en `dev.enriquezaporta.es/#terminal`.
+- **Modo terminal**: el CV como un pequeño sistema de archivos (`ls`, `cd`, `cat`, `tree`), con `ssh` a los nodos del homelab y unos cuantos easter eggs (`logros` dice cuántos llevas). Se abre con la tecla `` ` `` o en `dev.enriquezaporta.es/#terminal`.
 - **Español e inglés**, según el idioma del navegador o con `?lang=es` / `?lang=en`.
 - **PDF**: el botón *Descargar PDF* usa una hoja de estilos de impresión pensada para A4.
 

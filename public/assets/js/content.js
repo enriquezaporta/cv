@@ -58,7 +58,7 @@ window.CV = {
         "Aplicaciones que he diseñado, programado y desplegado yo mismo. Todas son PWA autoalojadas en mi homelab y su código está en GitHub.",
       homelab: "Este CV se sirve desde mi homelab",
       homelabIntro:
-        "Un clúster de Proxmox en un rack de 10 pulgadas en casa. Es donde pruebo, despliego y mantengo mis proyectos con las mismas prácticas que aplico en el trabajo.",
+        "Un clúster de Proxmox en un rack de 10 pulgadas y 12U en casa. Es donde pruebo, despliego y mantengo mis proyectos con las mismas prácticas que aplico en el trabajo.",
       skills: "Habilidades",
       education: "Formación",
       contact: "Contacto",
@@ -230,7 +230,7 @@ window.CV = {
       pve1: "pve1: gestión (DNS, proxy inverso, VPN, monitorización)",
       pve2: "pve2: aplicaciones",
       pve3: "pve3: aplicaciones y esta web",
-      pdu: "Regletas de alimentación",
+      pdu: "Regletas de alimentación (2 PDU)",
     },
     terminal: {
       welcome:
@@ -304,7 +304,7 @@ window.CV = {
         "Applications I designed, built and deployed myself. They are all self-hosted PWAs running in my homelab, and their code is on GitHub.",
       homelab: "This résumé is served from my homelab",
       homelabIntro:
-        "A Proxmox cluster in a 10-inch rack at home. It is where I test, deploy and maintain my projects with the same practices I use at work.",
+        "A Proxmox cluster in a 12U, 10-inch rack at home. It is where I test, deploy and maintain my projects with the same practices I use at work.",
       skills: "Skills",
       education: "Education",
       contact: "Contact",
@@ -476,7 +476,7 @@ window.CV = {
       pve1: "pve1: management (DNS, reverse proxy, VPN, monitoring)",
       pve2: "pve2: applications",
       pve3: "pve3: applications and this site",
-      pdu: "Power distribution",
+      pdu: "Power distribution (2 PDUs)",
     },
     terminal: {
       welcome: "Welcome to cv@enriquezaporta. Type 'help' to see the commands.",
