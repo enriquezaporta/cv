@@ -39,7 +39,7 @@ window.CV = {
       repo: "Ver el código",
       youAreHere: "esta web",
       rackCaption:
-        "El rack donde se ejecuta esta página. Pasa el ratón o toca cada unidad.",
+        "El rack donde se ejecuta esta página. Pulsa cada módulo para verlo en acción.",
       sourceNote: "El código de esta web es público",
       noscript:
         "Esta página necesita JavaScript para mostrar el CV. Puedes ver mi perfil en LinkedIn.",
@@ -238,6 +238,9 @@ window.CV = {
       pve2: "pve2: aplicaciones",
       pve3: "pve3: aplicaciones y esta web",
       pdu: "Regletas de alimentación (2 PDU)",
+      blank: "U libre. Hueco reservado para lo próximo que se me ocurra.",
+      here: "estás aquí",
+      clickHint: "Pulsa un módulo para verlo en acción.",
     },
     terminal: {
       welcome:
@@ -292,7 +295,7 @@ window.CV = {
       repo: "View the code",
       youAreHere: "this site",
       rackCaption:
-        "The rack this page runs on. Hover or tap each unit.",
+        "The rack this page runs on. Click each module to see it in action.",
       sourceNote: "The code for this site is public",
       noscript:
         "This page needs JavaScript to show the CV. You can find my profile on LinkedIn.",
@@ -491,6 +494,9 @@ window.CV = {
       pve2: "pve2: applications",
       pve3: "pve3: applications and this site",
       pdu: "Power distribution (2 PDUs)",
+      blank: "Free U. Reserved for whatever I come up with next.",
+      here: "you are here",
+      clickHint: "Click a module to see it in action.",
     },
     terminal: {
       welcome: "Welcome to cv@enriquezaporta. Type 'help' to see the commands.",

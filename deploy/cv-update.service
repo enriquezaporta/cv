@@ -12,6 +12,9 @@ Environment=HOME=/tmp
 ExecStart=/usr/bin/git fetch --depth 1 origin main
 ExecStart=/usr/bin/git reset --hard origin/main
 ExecStart=/usr/bin/git clean -fd
+# Versión de CSS/JS = commit actual, para que Cloudflare y el navegador
+# descarguen siempre los archivos nuevos (index.html lleva ?v=dev en el repo).
+ExecStart=/bin/sh -c 'v=$$(git rev-parse --short HEAD) && sed -i "s/?v=[A-Za-z0-9]*/?v=$$v/g" public/index.html'
 
 # Endurecimiento: solo puede escribir en su carpeta
 NoNewPrivileges=yes

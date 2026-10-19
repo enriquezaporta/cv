@@ -189,27 +189,198 @@
 
   // ---------- rack ----------
   function setupRack() {
+    const SVGNS = "http://www.w3.org/2000/svg";
+    const svg = $(".rack");
     const readout = $("#rack-caption");
-    const units = document.querySelectorAll(".rack .u");
+    const units = [...document.querySelectorAll(".rack .u")];
+    const drawer = $("#rack-drawer");
+    const packet = $("#rack-packet");
+    const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const R = () => CV[state.lang].rack;
+    let pinned = null;
+    let openNode = null;
+
+    const CTS = {
+      pve1: [["100", "monitor"], ["110", "dns"], ["111", "proxy"], ["112", "vpn"], ["113", "docs"]],
+      pve2: [["120", "gym"], ["121", "pesca"], ["122", "compra"]],
+      pve3: [["130", "tackboard"], ["131", "cv"]],
+    };
+    const el = (tag, attrs) => {
+      const n = document.createElementNS(SVGNS, tag);
+      for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+      return n;
+    };
+    const unitY = (u) => +u.querySelector("rect").getAttribute("y");
+    const pulse = (node, cls, ms) => {
+      node.classList.remove(cls);
+      void node.getBoundingClientRect();
+      node.classList.add(cls);
+      setTimeout(() => node.classList.remove(cls), ms);
+    };
+
+    // ---- lectura de texto ----
     const idle = () => {
+      if (pinned) return;
       readout.textContent = CV[state.lang].ui.rackCaption;
       units.forEach((u) => u.classList.remove("is-active"));
     };
     const show = (u) => {
       units.forEach((x) => x.classList.toggle("is-active", x === u));
-      readout.textContent = CV[state.lang].rack[u.dataset.unit] || "";
+      readout.textContent = R()[u.dataset.unit] || "";
     };
+
+    // ---- cajón de los nodos ----
+    function closeDrawer() {
+      if (!openNode) return;
+      openNode.classList.remove("is-open");
+      drawer.classList.remove("is-open");
+      openNode = null;
+      setTimeout(() => { if (!openNode) drawer.replaceChildren(); }, 300);
+    }
+    function openDrawer(u) {
+      if (openNode === u) return closeDrawer();
+      closeDrawer();
+      const name = u.dataset.unit;
+      const cts = CTS[name];
+      const y = unitY(u) + 36;
+      const h = 22 + cts.length * 17 + 6;
+      drawer.replaceChildren();
+      drawer.append(el("rect", { class: "tray", x: 46, y, width: 168, height: h, rx: 3 }));
+      const title = el("text", { class: "tray-title", x: 56, y: y + 15 });
+      title.textContent = `${name} · ${cts.length} CT`;
+      drawer.append(title);
+      cts.forEach(([id, ct], i) => {
+        const ry = y + 22 + i * 17;
+        drawer.append(el("rect", { class: "tray-row", x: 54, y: ry, width: 152, height: 14, rx: 2 }));
+        const led = el("circle", { class: "tray-led", cx: 62, cy: ry + 7, r: 2.2 });
+        led.style.animationDelay = `${(i * 0.37) % 1.3}s`;
+        drawer.append(led);
+        const t = el("text", { class: "tray-text", x: 70, y: ry + 10.5 });
+        t.textContent = `CT ${id}  ${ct}`;
+        drawer.append(t);
+        if (ct === "cv") {
+          const here = el("text", { class: "tray-here", x: 200, y: ry + 10.5, "text-anchor": "end" });
+          here.textContent = "◀ " + R().here;
+          drawer.append(here);
+        }
+      });
+      drawer.style.setProperty("--tray-origin", `${y}px`);
+      void drawer.getBoundingClientRect();
+      drawer.classList.add("is-open");
+      u.classList.add("is-open");
+      openNode = u;
+    }
+
+    // ---- switch: ráfaga de tráfico y un paquete hacia un nodo ----
+    let packetAnim = null;
+    function sendPacket() {
+      const leds = u_("switch").querySelectorAll(".led");
+      leds.forEach((l, i) => { l.style.animationDelay = `${i * 0.05}s`; });
+      pulse(u_("switch"), "burst", 1400);
+      if (reduced()) return;
+      const targets = ["pve1", "pve2", "pve3"].map(u_);
+      const target = targets[Math.floor(Math.random() * targets.length)];
+      const y0 = 86, y1 = unitY(target) + 18;
+      const x = 206;
+      const t0 = performance.now(), dur = 900;
+      cancelAnimationFrame(packetAnim);
+      packet.classList.add("is-flying");
+      const step = (now) => {
+        const k = Math.min(1, (now - t0) / dur);
+        const e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        packet.setAttribute("cx", x);
+        packet.setAttribute("cy", y0 + (y1 - y0) * e);
+        if (k < 1) packetAnim = requestAnimationFrame(step);
+        else {
+          packet.classList.remove("is-flying");
+          pulse(target, "hit", 700);
+        }
+      };
+      packetAnim = requestAnimationFrame(step);
+    }
+
+    // ---- pantalla: nuevas métricas ----
+    const spark = $(".rack .spark");
+    const screenText = $(".rack .screen-text");
+    let sparkAnim = null;
+    function refreshScreen() {
+      const from = spark.getAttribute("points").trim().split(/\s+/).map((p) => p.split(",").map(Number));
+      let v = 150;
+      const to = from.map(([x]) => { v = Math.max(126, Math.min(168, v + (Math.random() * 18 - 9))); return [x, Math.round(v)]; });
+      const cpu = Math.round(4 + Math.random() * 30), temp = Math.round(38 + Math.random() * 14);
+      screenText.textContent = `cpu ${cpu}% · ${temp}°C`;
+      pulse(u_("screen"), "flash", 500);
+      if (reduced()) return spark.setAttribute("points", to.map((p) => p.join(",")).join(" "));
+      const t0 = performance.now(), dur = 600;
+      cancelAnimationFrame(sparkAnim);
+      const step = (now) => {
+        const k = Math.min(1, (now - t0) / dur);
+        spark.setAttribute("points", from.map(([x, y], i) => `${x},${(y + (to[i][1] - y) * k).toFixed(1)}`).join(" "));
+        if (k < 1) sparkAnim = requestAnimationFrame(step);
+      };
+      sparkAnim = requestAnimationFrame(step);
+      clearTimeout(refreshScreen.t);
+      refreshScreen.t = setTimeout(() => { screenText.textContent = "pve · ok"; }, 4000);
+    }
+
+    // ---- panel de parcheo: los puertos se conectan uno a uno ----
+    function patchPorts() {
+      const ports = u_("patch").querySelectorAll(".ports rect");
+      ports.forEach((p, i) => { p.style.animationDelay = `${i * 0.08}s`; });
+      pulse(u_("patch"), "linking", 1600);
+    }
+
+    // ---- PDU: arranque en secuencia de todo el rack ----
+    function powerOn(u) {
+      const sockets = u.querySelectorAll(".sockets rect");
+      sockets.forEach((s, i) => { s.style.animationDelay = `${i * 0.1}s`; });
+      pulse(u, "powering", 1200);
+      const leds = [...svg.querySelectorAll(".led")].sort((a, b) => +a.getAttribute("cy") - +b.getAttribute("cy"));
+      leds.forEach((l, i) => { l.style.setProperty("--boot-delay", `${0.5 + i * 0.06}s`); });
+      pulse(svg, "booting", 2200);
+    }
+
+    function u_(name) { return units.find((u) => u.dataset.unit === name); }
+
+    function activate(u) {
+      pinned = u;
+      show(u);
+      const name = u.dataset.unit;
+      if (name.startsWith("pve")) openDrawer(u);
+      else {
+        closeDrawer();
+        if (name === "switch") sendPacket();
+        else if (name === "screen") refreshScreen();
+        else if (name === "patch") patchPorts();
+        else if (name === "pdu") powerOn(u);
+        else if (name === "blank") pulse(u, "wiggle", 500);
+      }
+    }
+
     units.forEach((u) => {
-      u.addEventListener("mouseenter", () => show(u));
-      u.addEventListener("focus", () => show(u));
-      u.addEventListener("click", () => show(u));
+      u.addEventListener("mouseenter", () => { if (!pinned) show(u); });
       u.addEventListener("mouseleave", idle);
+      u.addEventListener("click", (e) => { e.stopPropagation(); activate(u); });
+      u.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activate(u); }
+      });
+      u.addEventListener("focus", () => { if (!pinned) show(u); });
       u.addEventListener("blur", idle);
     });
-    units.forEach((u) => u.setAttribute("aria-label", CV[state.lang].rack[u.dataset.unit] || ""));
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".rack")) { pinned = null; closeDrawer(); idle(); }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && (pinned || openNode)) { pinned = null; closeDrawer(); idle(); }
+    });
+
+    const labels = () => units.forEach((u) => u.setAttribute("aria-label", R()[u.dataset.unit] || ""));
+    labels();
     idle();
     return () => {
-      units.forEach((u) => u.setAttribute("aria-label", CV[state.lang].rack[u.dataset.unit] || ""));
+      labels();
+      pinned = null;
+      closeDrawer();
       idle();
     };
   }

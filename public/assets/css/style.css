@@ -892,8 +892,9 @@ main {
     grid-template-columns: repeat(3, 1fr);
     gap: 2.5mm 6mm;
   }
-  .print-callout {
-    display: flex;
+  .print-callout,
+  .print-callout[hidden] {
+    display: flex !important;
     align-items: center;
     gap: 5mm;
     margin: 4mm 0 0;
@@ -986,4 +987,58 @@ main {
 @keyframes party-face { 0%, 100% { stroke: #ff2bd6; } 33% { stroke: #00e5ff; } 66% { stroke: #39ff88; } }
 @media (prefers-reduced-motion: reduce) {
   .party .led, .party .led-power, .party .spark, .party .u-face { animation: none; fill: #ff2bd6; stroke: #ff2bd6; }
+}
+
+/* ---------- rack interactivo ---------- */
+.u { transition: transform 0.3s ease; }
+.u-blank .blank { transition: opacity 0.2s ease; }
+.u-blank:hover .blank, .u-blank.is-active .blank { opacity: 0.85; }
+.u.is-open { transform: translateX(-8px); }
+.u.is-open .u-face { stroke: var(--accent); stroke-width: 2; }
+
+/* cajón con los CTs */
+.drawer { opacity: 0; transform: translateY(-14px) scaleY(0.6); transform-origin: 50% var(--tray-origin, 0); transition: opacity 0.25s ease, transform 0.3s cubic-bezier(.2, .8, .2, 1); pointer-events: none; }
+.drawer.is-open { opacity: 1; transform: none; }
+.tray { fill: #151a20; stroke: var(--accent); stroke-width: 1.5; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45)); }
+.tray-title { font-family: var(--mono); font-size: 10px; font-weight: 700; fill: #8fb9a8; letter-spacing: 0.04em; }
+.tray-row { fill: #1f262e; }
+.tray-text { font-family: var(--mono); font-size: 10px; fill: #d7dcd6; }
+.tray-here { font-family: var(--sans); font-size: 9.5px; font-weight: 700; fill: var(--led-amber); }
+.tray-led { fill: var(--led-on); }
+@media (prefers-reduced-motion: no-preference) {
+  .tray-led { animation: blink 1.3s steps(1, end) infinite; }
+}
+
+/* paquete del switch */
+.packet { fill: var(--led-amber); opacity: 0; filter: drop-shadow(0 0 4px var(--led-amber)); }
+.packet.is-flying { opacity: 1; }
+.u.hit .u-face { animation: hit 0.7s ease; }
+@keyframes hit { 0%, 100% { fill: var(--metal-2); } 30% { fill: #5b4a1e; stroke: var(--led-amber); } }
+
+/* ráfaga en el switch */
+.u.burst .led { animation: burst 0.12s steps(1, end) 10 !important; }
+@keyframes burst { 0% { opacity: 1; fill: #8dffc4; } 50% { opacity: 0.15; } }
+
+/* pantalla */
+.u.flash .screen { animation: flash 0.5s ease; }
+@keyframes flash { 0% { fill: #1f3a30; } 100% { fill: var(--screen); } }
+
+/* panel de parcheo */
+.u.linking .ports rect { animation: link 1.6s ease both; }
+@keyframes link { 0% { fill: var(--port); } 20% { fill: var(--led-on); } 70% { fill: var(--led-on); } 100% { fill: var(--port); } }
+
+/* PDU: tomas y arranque de todo el rack */
+.u.powering .sockets rect { animation: socket 1.2s ease both; }
+@keyframes socket { 0% { fill: var(--port); } 30% { fill: var(--led-amber); } 100% { fill: var(--port); } }
+.rack.booting .led { animation: boot 1.5s ease both !important; animation-delay: var(--boot-delay, 0s) !important; }
+@keyframes boot { 0% { opacity: 1; } 5% { opacity: 0.05; } 60% { opacity: 0.05; } 70% { opacity: 1; filter: drop-shadow(0 0 3px var(--led-on)); } 100% { opacity: 1; } }
+
+/* hueco libre */
+.u.wiggle { animation: wiggle 0.5s ease; }
+@keyframes wiggle { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .u, .drawer { transition: none; }
+  .u.is-open { transform: none; }
+  .u.burst .led, .u.linking .ports rect, .u.powering .sockets rect, .rack.booting .led, .u.wiggle, .u.hit .u-face, .u.flash .screen { animation: none !important; }
 }
