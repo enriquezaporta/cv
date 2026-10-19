@@ -28,6 +28,8 @@ window.CV = {
         contact: "Contacto",
       },
       skip: "Saltar al contenido",
+      printCallout: "Versión interactiva de este CV",
+      printCalloutText: "Proyectos con capturas, el homelab donde se ejecuta y un modo terminal con sorpresas. Escanea el código o entra en:",
       terminal: "Modo terminal",
       print: "Descargar PDF",
       langSwitch: "English",
@@ -77,6 +79,7 @@ window.CV = {
           "Administración de Microsoft 365 y Exchange Online.",
           "Monitorización de la infraestructura con LibreNMS, incluidos sensores y regletas gestionables.",
           "Soporte del sistema de videovigilancia Milestone XProtect.",
+          "TV interna del circuito: configuración de encoders, cableado y señal SDI/HDMI, integración de los canales de promotores externos y supervisión de la señal durante los eventos.",
           "Desarrollo de aplicaciones web internas para automatizar y mejorar procesos.",
         ],
       },
@@ -175,11 +178,15 @@ window.CV = {
       },
       {
         group: "Virtualización y servidores",
-        items: ["Proxmox VE", "VMware ESXi / vCenter", "LXC", "Docker", "Linux (Debian)", "Windows Server", "ZFS"],
+        items: ["Proxmox VE", "VMware ESXi / vCenter", "LXC", "Docker", "Linux", "Windows Server"],
       },
       {
         group: "Microsoft y videovigilancia",
         items: ["Microsoft 365", "Exchange Online", "Milestone XProtect"],
+      },
+      {
+        group: "Vídeo y TV interna",
+        items: ["Encoders de vídeo", "Señal SDI y HDMI", "Distribución de canales", "Supervisión en eventos"],
       },
       {
         group: "Desarrollo web",
@@ -262,7 +269,7 @@ window.CV = {
     meta: {
       title: "Enrique Zaporta Sierra · Web developer and IT systems technician",
       description:
-        "Résumé of Enrique Zaporta Sierra: full stack web developer and IT systems technician based in Alcañiz, Spain.",
+        "CV of Enrique Zaporta Sierra: full stack web developer and IT systems technician based in Alcañiz, Spain.",
     },
     ui: {
       nav: {
@@ -274,6 +281,8 @@ window.CV = {
         contact: "Contact",
       },
       skip: "Skip to content",
+      printCallout: "Interactive version of this CV",
+      printCalloutText: "Projects with screenshots, the homelab it runs on and a terminal mode with surprises. Scan the code or visit:",
       terminal: "Terminal mode",
       print: "Download PDF",
       langSwitch: "Español",
@@ -286,7 +295,7 @@ window.CV = {
         "The rack this page runs on. Hover or tap each unit.",
       sourceNote: "The code for this site is public",
       noscript:
-        "This page needs JavaScript to show the résumé. You can find my profile on LinkedIn.",
+        "This page needs JavaScript to show the CV. You can find my profile on LinkedIn.",
       languages: "Languages",
       other: "Other",
     },
@@ -302,7 +311,7 @@ window.CV = {
       projects: "Projects",
       projectsIntro:
         "Applications I designed, built and deployed myself. They are all self-hosted PWAs running in my homelab, and their code is on GitHub.",
-      homelab: "This résumé is served from my homelab",
+      homelab: "This CV is served from my homelab",
       homelabIntro:
         "A Proxmox cluster in a 12U, 10-inch rack at home. It is where I test, deploy and maintain my projects with the same practices I use at work.",
       skills: "Skills",
@@ -319,10 +328,11 @@ window.CV = {
         end: null,
         points: [
           "Running and maintaining the corporate network: MikroTik and Meraki equipment, VLAN segmentation and network availability.",
-          "Virtualisation with VMware ESXi and vCenter, and Linux and Windows server administration.",
+          "Virtualization with VMware ESXi and vCenter, and Linux and Windows server administration.",
           "Microsoft 365 and Exchange Online administration.",
           "Infrastructure monitoring with LibreNMS, including sensors and managed PDUs.",
           "Support for the Milestone XProtect video surveillance system.",
+          "In-house TV for the circuit: encoder setup, SDI/HDMI cabling and signal routing, integrating external promoters' channels and monitoring the signal during events.",
           "Building internal web applications to automate and improve processes.",
         ],
       },
@@ -358,7 +368,7 @@ window.CV = {
         img: "assets/img/tackboard.webp",
         alt: "Tackboard Kanban board on desktop",
         text:
-          "Task organiser with Kanban boards, a calendar and shared boards with permissions. Works offline, sends push reminders (iPhone included) and adds pomodoro, recurring tasks and an iCal feed.",
+          "Task organizer with Kanban boards, a calendar and shared boards with permissions. Works offline, sends push reminders (iPhone included) and adds pomodoro, recurring tasks and an iCal feed.",
         stack: ["JavaScript", "Python", "SQLite", "PWA", "Web Push", "Docker"],
       },
       {
@@ -388,7 +398,7 @@ window.CV = {
         img: "assets/img/cesta-compra.webp",
         alt: "Compra list, quick add and send screens on mobile",
         text:
-          "Shared household shopping list that is sent to Mercadona's online grocery service in one click. Nightly-updated catalogue with photos and prices, estimated total, and a quick-add screen opened by tapping an NFC sticker on the fridge.",
+          "Shared household shopping list that is sent to Mercadona's online grocery service in one click. Nightly-updated catalog with photos and prices, estimated total, and a quick-add screen opened by tapping an NFC sticker on the fridge.",
         stack: ["JavaScript", "Python", "SQLite", "PWA", "NFC", "Docker"],
       },
     ],
@@ -420,12 +430,16 @@ window.CV = {
         items: ["MikroTik", "Cisco Meraki", "VLAN", "WireGuard", "DNS", "Firewall", "LibreNMS"],
       },
       {
-        group: "Virtualisation and servers",
-        items: ["Proxmox VE", "VMware ESXi / vCenter", "LXC", "Docker", "Linux (Debian)", "Windows Server", "ZFS"],
+        group: "Virtualization and servers",
+        items: ["Proxmox VE", "VMware ESXi / vCenter", "LXC", "Docker", "Linux", "Windows Server"],
       },
       {
         group: "Microsoft and video surveillance",
         items: ["Microsoft 365", "Exchange Online", "Milestone XProtect"],
+      },
+      {
+        group: "Video and in-house TV",
+        items: ["Video encoders", "SDI and HDMI signal", "Channel distribution", "Live event monitoring"],
       },
       {
         group: "Web development",
@@ -448,7 +462,7 @@ window.CV = {
       { name: "Spanish", level: "native" },
       { name: "English", level: "B2" },
     ],
-    other: ["Driving licence", "Own vehicle"],
+    other: ["Driver's license", "Own vehicle"],
     education: [
       {
         title: "Higher Technician in Web Application Development",

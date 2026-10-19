@@ -560,7 +560,8 @@ main {
   font-weight: 600;
 }
 .print-url,
-.print-contact {
+.print-contact,
+.print-callout {
   display: none;
 }
 .project-shot {
@@ -782,7 +783,7 @@ main {
 @media print {
   @page {
     size: A4;
-    margin: 14mm 15mm;
+    margin: 11mm 13mm;
   }
   :root {
     --paper: #ffffff;
@@ -793,8 +794,8 @@ main {
     --accent: #0b6e5b;
   }
   body {
-    font-size: 10pt;
-    line-height: 1.45;
+    font-size: 9.6pt;
+    line-height: 1.4;
     background: #fff;
   }
   .topbar,
@@ -831,7 +832,7 @@ main {
     max-width: none;
   }
   .section {
-    padding: 4mm 0;
+    padding: 3mm 0;
     break-inside: auto;
   }
   .section h2 {
@@ -851,7 +852,7 @@ main {
   .tl-item {
     grid-template-columns: 34mm 1fr;
     gap: 4mm;
-    padding: 2.5mm 0;
+    padding: 2mm 0;
     break-inside: avoid;
   }
   .tl-title,
@@ -890,6 +891,46 @@ main {
   .skills {
     grid-template-columns: repeat(3, 1fr);
     gap: 2.5mm 6mm;
+  }
+  .print-callout {
+    display: flex;
+    align-items: center;
+    gap: 5mm;
+    margin: 4mm 0 0;
+    padding: 3.5mm 4.5mm;
+    border: 0.6mm solid var(--accent);
+    border-left-width: 2.2mm;
+    border-radius: 2mm;
+    background: #eef6f3 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    break-inside: avoid;
+  }
+  .print-qr {
+    flex: none;
+    width: 24mm;
+    height: 24mm;
+  }
+  .print-callout-title {
+    margin: 0;
+    font-size: 12pt;
+    font-weight: 800;
+    font-stretch: 112%;
+    color: var(--accent);
+  }
+  .print-callout-text {
+    margin: 1mm 0 0;
+    font-size: 9.5pt;
+    color: var(--ink);
+  }
+  .print-callout-url {
+    display: inline-block;
+    margin-top: 1.5mm;
+    font-family: var(--mono);
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--accent) !important;
+    text-decoration: underline !important;
   }
   .print-contact {
     display: block;

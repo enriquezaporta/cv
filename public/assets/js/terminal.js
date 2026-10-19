@@ -651,7 +651,7 @@
       mark("rmrf");
       return;
     }
-    line(T("rm: operación no permitida: este CV es de solo lectura.", "rm: operation not permitted: this résumé is read-only."), "t-err");
+    line(T("rm: operación no permitida: este CV es de solo lectura.", "rm: operation not permitted: this CV is read-only."), "t-err");
   }
 
   let sudoFails = 0;
@@ -678,7 +678,7 @@
       [T("una breca", "a bream"), 0.3, 2.4], [T("un alburno", "a bleak"), 0.02, 0.06], [T("un siluro", "a wels catfish"), 4, 28],
       [T("una bota vieja", "an old boot"), 0.8, 0.8],
     ];
-    line(T("Cebando el feeder… lanzando a 40 metros…", "Loading the feeder… casting to 40 metres…"), "t-dim");
+    line(T("Cebando el feeder… lanzando a 40 metros…", "Loading the feeder… casting to 40 meters…"), "t-dim");
     const p = line("", "t-dim");
     let i = 0;
     const timer = setInterval(() => { p.textContent = "~".repeat(++i % 12) + "🎣"; scrollEnd(); }, 140);
