@@ -83,7 +83,7 @@
   const HOME = "/home/kike";
   const JOB_SLUGS = ["insinec-motorland.md", "siba-informatica.md", "ceip-concepcion-gimeno.md"];
   const EDU_SLUGS = ["daw.txt", "smr.txt", "eso.txt"];
-  const SECRET = "RWwgw7psdGltbyBodWV2bzogZXNjcsOtYmVtZSBhIGVucmlxdWV6YXBvcnRhQGdtYWlsLmNvbSBjb24gbGEgcGFsYWJyYSAiZmVlZGVyIiBlbiBlbCBhc3VudG8geSBoYWJsYW1vcy4=";
+  const SECRET = "U2VjcmV0byBlbmNvbnRyYWRvLiBTaSBtZSBlc2NyaWJlcyBhIGVucmlxdWV6YXBvcnRhQGdtYWlsLmNvbSBjb24gbGEgcGFsYWJyYSAiZmVlZGVyIiBlbiBlbCBhc3VudG8sIHNhYnLDqSBxdWUgaGFzIGxsZWdhZG8gaGFzdGEgYXF1w60u";
   const dir = (children) => ({ type: "dir", children });
   const file = (content, extra) => Object.assign({ type: "file", content }, extra || {});
 
@@ -627,7 +627,9 @@
     if (sub === "hire-me") {
       line(t().terminal.hire.replace("{email}", App.email()), "t-accent");
       link(App.email(), "mailto:" + App.email());
-      return mark("hire");
+      const msg = mark("hire");
+      if (found.size === EGGS.length) line(T('Y como ya tienes todos los logros, pon "feeder" en el asunto.', 'And since you have every achievement, put "feeder" in the subject.'), "t-egg");
+      return msg;
     }
     if (args[0] === "rm") return rmCmd(args.slice(1), true);
     sudoFails++;
@@ -639,8 +641,8 @@
 
   function pescarCmd() {
     const fish = [
-      [T("carpa", "carp"), 1.2, 6.5], [T("barbo", "barbel"), 0.4, 3.2], [T("carpín", "crucian carp"), 0.15, 0.8],
-      [T("breca", "bream"), 0.3, 2.4], [T("alburno", "bleak"), 0.02, 0.06], [T("siluro", "wels catfish"), 4, 28],
+      [T("una carpa", "a carp"), 1.2, 6.5], [T("un barbo", "a barbel"), 0.4, 3.2], [T("un carpín", "a crucian carp"), 0.15, 0.8],
+      [T("una breca", "a bream"), 0.3, 2.4], [T("un alburno", "a bleak"), 0.02, 0.06], [T("un siluro", "a wels catfish"), 4, 28],
       [T("una bota vieja", "an old boot"), 0.8, 0.8],
     ];
     line(T("Cebando el feeder… lanzando a 40 metros…", "Loading the feeder… casting to 40 metres…"), "t-dim");
@@ -654,11 +656,12 @@
       const [name, min, max] = fish[Math.floor(Math.random() * fish.length)];
       const kg = +(min + Math.random() * (max - min)).toFixed(2);
       const rec = store.get("cv-fish-record", 0);
+      const fmt = (n) => n.toLocaleString(App.lang === "es" ? "es-ES" : "en-GB", { maximumFractionDigits: 2 });
       p.textContent = "><(((º>";
-      line(`${T("¡Picada! Has sacado", "Bite! You landed")} ${name} ${T("de", "of")} ${kg.toLocaleString(App.lang === "es" ? "es-ES" : "en-GB")} kg.`, "t-accent");
+      line(`${T("¡Picada! Has sacado", "Bite! You landed")} ${name} ${T("de", "of")} ${fmt(kg)} kg.`, "t-accent");
       if (name.includes("bota") || name.includes("boot")) line(T("Cuenta como captura. Más o menos.", "It counts. Sort of."), "t-dim");
       else if (kg > rec) { store.set("cv-fish-record", kg); line(T("¡Nuevo récord personal!", "New personal best!"), "t-egg"); }
-      else line(`${T("Tu récord", "Your record")}: ${rec} kg`, "t-dim");
+      else line(`${T("Tu récord", "Your record")}: ${fmt(rec)} kg`, "t-dim");
       mark("fish");
     };
     startBusy(done);
@@ -724,7 +727,7 @@
     heading(`${T("Logros", "Achievements")}: ${found.size}/${EGGS.length}`);
     for (const [id, nes, nen] of EGGS) line(found.has(id) ? `  ★ ${T(nes, nen)}` : "  ☆ ???", found.has(id) ? "t-accent" : "t-dim");
     if (found.size < EGGS.length) { line(); line(T("Pista: explora con ls -a, lee los logs y no te fíes de vim.", "Hint: explore with ls -a, read the logs and don't trust vim."), "t-dim"); }
-    else line(T("Los tienes todos. Ahora sí: sudo hire-me.", "You've got them all. Now: sudo hire-me."), "t-egg");
+    else line(T('Los tienes todos. Escríbeme con "feeder" en el asunto y cuéntame cuánto has tardado.', 'You\'ve got them all. Email me with "feeder" in the subject and tell me how long it took.'), "t-egg");
   }
 
   function base64Cmd(args) {
